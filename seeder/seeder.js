@@ -1,8 +1,10 @@
 const { faker } = require("@faker-js/faker");
 const { MongoClient } = require("mongodb");
 
-const MONGO_HOST_ADDRESS = "mongodb://localhost:27017";
+const MONGO_HOST_ADDRESS = "mongodb://127.0.0.1:27017/test";
 const mongoClient = new MongoClient(MONGO_HOST_ADDRESS);
+
+let now = require("performance-now");
 
 mongoClient
   .connect()
@@ -31,9 +33,12 @@ const seedUserCollection = async (numberOfUsers) => {
   });
 
   try {
+    let start = now();
     await userCollection.insertMany(users);
 
-    console.log(`✅ Seeding successful! ${numberOfUsers} users are inserted.`);
+    let end = now();
+
+    console.log(`✅ Seeding successful! ${numberOfUsers} users are inserted. Took ${end - start} milliseconds.`);
   } catch (error) {
     console.log(`❌ Something went wrong while seeding the database: ${error}`);
   }
@@ -76,6 +81,6 @@ const seedTransferCollection = async () => {
   }
 };
 
-seedUserCollection(1000).then(() => {
+seedUserCollection(100000).then(() => {
   seedTransferCollection().then(() => mongoClient.close());
 });
