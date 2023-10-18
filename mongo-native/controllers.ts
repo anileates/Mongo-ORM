@@ -11,6 +11,7 @@ const createUser = async (req: Request, res: Response) => {
     balance,
   });
 
+
   res.status(200).json(user);
 };
 

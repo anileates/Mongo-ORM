@@ -12,7 +12,6 @@ app.put('/users/:id/update-balance', updateBalance)
 app.post('/transfers', createMoneyTransfer)
 app.get('/user/:id/transfers', getUserTransfers);
 
-
 app.listen(3002, () => {
   console.log("Server is running on http://localhost:3002");
 });
